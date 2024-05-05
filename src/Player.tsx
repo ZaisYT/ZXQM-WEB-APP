@@ -126,6 +126,18 @@ export const Player = ({ queue, audio, currentSongIndex, setCurrentSongIndex }: 
     event.target.style.backgroundSize = ((val - min) * 10000) / (max - min) + '% 100%'
   }
 
+  const formatArtists = (artists: string[]): string => {
+    const artistCount = artists.length;
+
+    if (artistCount === 1) {
+      return artists[0];
+    } else if (artistCount === 2) {
+      return `${artists[0]} & ${artists[1]}`;
+    } else {
+      return `${artists.slice(0, -1).join(', ')} & ${artists[artistCount - 1]}`;
+    }
+  };
+
   const locationData = useLocation();
 
   audio.preload = "metadata";
@@ -191,7 +203,7 @@ export const Player = ({ queue, audio, currentSongIndex, setCurrentSongIndex }: 
     if ("mediaSession" in navigator) {
       navigator.mediaSession.metadata = new MediaMetadata({
         title: songData.songName,
-        artist: songData.songArtists[0],
+        artist: formatArtists(songData.songArtists),
         artwork: [{ src: songData.iconURL }],
       });
     }
@@ -235,7 +247,7 @@ export const Player = ({ queue, audio, currentSongIndex, setCurrentSongIndex }: 
             <img draggable="false" src={songData.iconURL} />
             <div className="details">
               <h1>{songData.songName}</h1>
-              <h2>{songData.songArtists[0]}</h2>
+              <h2>{formatArtists(songData.songArtists)}</h2>
             </div>
           </div>
 
