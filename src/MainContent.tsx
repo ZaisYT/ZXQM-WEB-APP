@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './css/MainContent.css';
+import { useLocation } from 'react-router-dom';
+
 
 type typeSongData = {
   "iconURL": string,
@@ -17,11 +19,12 @@ type typeArtistData = {
 }
 
 type ContentType = {
+  setArtistID: React.Dispatch<React.SetStateAction<string>>,
   setSongID: React.Dispatch<React.SetStateAction<string[]>>,
   audio: HTMLAudioElement,
 }
 
-export const MainContent = ({setSongID, audio}: ContentType) => {
+export const MainContent = ({setArtistID, setSongID, audio}: ContentType) => {
   const [timeDisplay, setTimeDisplay] = useState("");
   const [songCards, setSongCards] = useState<JSX.Element[]>([]);
   const [artistCards, setArtistCards] = useState<JSX.Element[]>([]);
@@ -76,12 +79,12 @@ export const MainContent = ({setSongID, audio}: ContentType) => {
       .then(res => res.json())
       .then(data => {
         let nofartists = Object.keys(data).length;
-        const uniqueSongIndexes = generateUniqueRandomNumbers(7, 0, (nofartists - 1));
+        const uniqueSongIndexes = generateUniqueRandomNumbers(5, 0, (nofartists - 1));
 
         let arrayOfCards = [];
 
         for(let num in uniqueSongIndexes){
-          let newCard = generateArtistCard(Number(num), data[Object.keys(data)[uniqueSongIndexes[num]]]);
+          let newCard = generateArtistCard(Number(num), data[Object.keys(data)[uniqueSongIndexes[num]]], Object.keys(data)[uniqueSongIndexes[num]]);
 
           arrayOfCards.push(newCard);
         }
@@ -90,27 +93,45 @@ export const MainContent = ({setSongID, audio}: ContentType) => {
       });
   }, []);
 
+  const locationData = useLocation();
+
   function generateSongCard(key: number, data: typeSongData, id: string) {
     return (
       <div key={key} className="card" onClick={() => {
         audio.pause();
-        setSongID([id])
+        setSongID([id]);
       }}>
         <img src={data.iconURL} draggable="false" />
         <h2>{data.songName}</h2>
-        <h3>{data.songArtists[0]}</h3>
+        <h3>{formatArtists(data.songArtists)}</h3>
       </div>
     )
   }
 
-  function generateArtistCard(key: number, data: typeArtistData) {
+  function generateArtistCard(key: number, data: typeArtistData, id: string) {
     return (
-      <div key={key} className="card">
+      <div key={key} className="card" onClick={() => {
+        setArtistID(id);
+        locationData.pathname = "/artist";
+      }}>
         <img src={data.pfp} draggable="false" />
         <h2>{data.name}</h2>
       </div>
     )
   }
+
+  const formatArtists = (artists: string[]): string => {
+    const artistCount = artists.length;
+
+    if (artistCount === 1) {
+      return artists[0];
+    } else if (artistCount === 2) {
+      return `${artists[0]} & ${artists[1]}`;
+    } else {
+      return `${artists.slice(0, -1).join(', ')} & ${artists[artistCount - 1]}`;
+    }
+  };
+
 
   return (
     <div className='contentWrapper'>
