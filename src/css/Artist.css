@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+:root {
+  --primary-color: rgba(254, 93, 38, 1);
+  --secondary-color: rgba(219, 84, 97, 1);
+
+  --primary-bgcolor: rgba(44, 48, 46, 1);
+  --primary-faded-bgcolor: rgba(44, 48, 46, 0.5);
+  --secondary-bgcolor: rgba(71, 74, 72, 1);
+
+  --subtitle-color: rgba(144, 149, 144, 1);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --title-color: rgba(255, 255, 255, 1);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.contentArtsWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "BannerArea BannerArea BannerArea"
+    "MainContentArea MainContentArea BiographyArea"
+    "DiscographyArea DiscographyArea BiographyArea";
+
+  margin-top: calc(5vh + 20px);
+  height: calc(95vh - 110px);
+  padding-bottom: 10px;
+  background-color: var(--secondary-bgcolor);
+  color: var(--title-color);
+  font-family: "Open Sans", sans-serif;
+
+  & .BannerArea {
+    display: flex;
+    align-items: end;
+    grid-area: BannerArea;
+    background-repeat: repeat-x;
+    background-position: center;
+    background-size: cover;
+    border-bottom: 1px solid var(--title-color);
+
+    & .redes {
+      display: flex;
+      width: 50%;
+      justify-content: end;
+
+      & p {
+        margin-right: 15px;
+        margin-bottom: 15px;
+      }
+    }
+
+    & .info {
+      display: flex;
+      width: 50%;
+      flex-direction: column;
+      justify-content: end;
+
+      & .isVerified {
+        display: flex;
+        align-items: center;
+
+        & .verified {
+          margin-left: 15px;
+          width: 25px;
+          height: 25px;
+          background-image: url("../svgs/verified.svg");
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: cover;
+          display: flex;
+        }
+
+        & p:not(.verified) {
+          margin-left: 5px;
+        }
+      }
+
+      & h1 {
+        margin-left: 15px;
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
+
+.BiographyArea {
+  grid-area: BiographyArea;
+}
+
+.MainContentArea {
+  grid-area: MainContentArea;
+
+  & h1 {
+    margin-block: 5px;
+    margin-left: 10px;
+  }
+  
+  & .cards {
+    display: flex;
+    margin-block: 5px;
+    margin-left: 10px;
+
+    & .card {
+      cursor: pointer;
+      margin-right: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      width: 140px;
+      height: 200px;
+      padding: 10px;
+      background-color: var(--primary-faded-bgcolor);
+  
+      & img {
+        width: 140px;
+        height: 140px;
+        border-radius: 5px;
+      }
+  
+      & h2 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 20px;
+        color: var(--title-color);
+      }
+  
+      & h3 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 16px;
+        color: var(--subtitle-color);
+      }
+    }
+  }
+}
+
+.DiscographyArea {
+  grid-area: DiscographyArea;
+
+  & .Labels {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-block: 5px;
+    margin-left: 10px;
+
+    & h1 {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+    }
+  }
+
+  & .cards {
+    display: flex;
+    margin-left: 10px;
+
+    & .card {
+      cursor: pointer;
+      margin-right: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      width: 140px;
+      height: 200px;
+      padding: 10px;
+      background-color: var(--primary-faded-bgcolor);
+  
+      & img {
+        width: 140px;
+        height: 140px;
+        border-radius: 5px;
+      }
+  
+      & h2 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 20px;
+        color: var(--title-color);
+      }
+  
+      & h3 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 16px;
+        color: var(--subtitle-color);
+      }
+    }
+  }
+}
